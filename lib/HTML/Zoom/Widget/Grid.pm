@@ -29,7 +29,7 @@ method column_spec {
 
 method render_row_data($data) {
    my @rows;
-   for my $data_item (@{$data}) {
+   for my $data_item (@{$data->{data}}) {
       my @columns;
 
       my $col_id = 1;
@@ -81,32 +81,32 @@ use MooseX::Declare;
 class UserGrid extends HTML::Zoom::Widget::Grid {
 
   method id_column {
-    return id => {
+    return {
       # no renderer used so value is printed directly
       value_field => 'id',
     }
   }
 
   mehod email_column {
-    return email => {
+    return {
       renderer => 'email_renderer',
       value_field => 'email',
     }
   }
 
   method name_column {
-    return name => {
+    return {
       renderer => 'name_renderer',
       # no value field is used since it's effectively a composite field
     }
   }
 
   method columns {
-    return {
+    return [
       $self->id_column,
       $self->email_column,
       $self->name_column,
-    }
+    ]
   }
 
   method name_renderer($value, $row) {

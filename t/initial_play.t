@@ -41,5 +41,5 @@ print $grid->insert_into_html($template, {
       name => 'wes',
    }],
    total => 100,
-);
+});
 
