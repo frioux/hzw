@@ -30,18 +30,22 @@ HTML
 
    sub columns { [qw( id name )] }
 
+   sub id_renderer { $_[1] * 2 }
+
    sub id_column {
       {
          data_index => 'id',
-         renderer => sub { $_[1] * 2 },
+         renderer => 'id_renderer',
       }
    }
+
+   sub name_renderer { $_[1] . ' ' . $_[2]->{id} }
 
    sub name_column {
       {
          data_index => 'name',
          column_class => 'frewbot',
-         renderer => sub { $_[1] . ' ' . $_[2]->{id} },
+         renderer => 'name_renderer',
       }
    }
 
