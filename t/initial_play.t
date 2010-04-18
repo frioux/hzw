@@ -1,8 +1,9 @@
 #!perl
 
-use 5.11.0;
-
+use strict;
 use warnings;
+
+use Test::More;
 
 use HTML::Zoom;
 use aliased 'HTML::Zoom::Widget::Grid::Dad' => 'Grid';
@@ -74,8 +75,24 @@ my $data = {
    total => 100,
 };
 
-print $grid2->insert_into_html($template, $data);
+is $grid1->insert_into_html($template, $data),'<html>
+  <head>
+    <title>Hello people</title>
+  </head>
+  <body>
+    <div id="grid1"><table><tr><td class="col-1">frew 1</td><td class="frewbot col-2"></td></tr><tr><td class="col-1">wes 2</td><td class="frewbot col-2"></td></tr></table></div>
+  </body>
+</html>
+', 'data structure grid works';
 
-print $grid1->insert_into_html($template, $data);
+is $grid2->insert_into_html($template, $data),'<html>
+  <head>
+    <title>Hello people</title>
+  </head>
+  <body>
+    <div id="grid1"><table><tr><td class="col-1">frew 1</td><td class="frewbot col-2"></td></tr><tr><td class="col-1">wes 2</td><td class="frewbot col-2"></td></tr></table></div>
+  </body>
+</html>
+', 'class grid works';
 
-
+done_testing;
