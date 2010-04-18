@@ -5,7 +5,7 @@ use 5.11.0;
 use warnings;
 
 use HTML::Zoom;
-use aliased 'HTML::Zoom::Widget::Grid';
+use aliased 'HTML::Zoom::Widget::Grid::Dad' => 'Grid';
 
   my $template = <<HTML;
 <html>

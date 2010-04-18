@@ -1,4 +1,4 @@
-package HTML::Zoom::Widget::Grid;
+package HTML::Zoom::Widget::Grid::Dad;
 
 use 5.12.0;
 
