@@ -7,7 +7,7 @@ use warnings;
 use HTML::Zoom;
 use aliased 'HTML::Zoom::Widget::Grid::Dad' => 'Grid';
 
-  my $template = <<HTML;
+my $template = <<HTML;
 <html>
   <head>
     <title>Hello people</title>
@@ -18,7 +18,36 @@ use aliased 'HTML::Zoom::Widget::Grid::Dad' => 'Grid';
 </html>
 HTML
 
-my $grid = Grid->new({ config => {
+{
+   package A::Grid;
+
+   use Moose;
+
+   extends 'HTML::Zoom::Widget::Grid';
+
+   sub render_to { 'div#grid1' }
+
+   sub columns { [qw( id name )] }
+
+   sub id_column {
+      {
+         data_index => 'id',
+         renderer => sub { $_[1] * 2 },
+      }
+   }
+
+   sub name_column {
+      {
+         data_index => 'name',
+         column_class => 'frewbot',
+         renderer => sub { $_[1] . ' ' . $_[2]->{id} },
+      }
+   }
+
+   1;
+}
+
+my $grid1 = Grid->new({ config => {
    render_to => 'div#grid1',
    columns => [
       {
@@ -32,7 +61,9 @@ my $grid = Grid->new({ config => {
    ]
 }});
 
-print $grid->insert_into_html($template, {
+my A::Grid $grid2 = A::Grid->new();
+
+my $data = {
    data => [{
       id => 1,
       name => 'frew',
@@ -41,5 +72,10 @@ print $grid->insert_into_html($template, {
       name => 'wes',
    }],
    total => 100,
-});
+};
+
+print $grid2->insert_into_html($template, $data);
+
+print $grid1->insert_into_html($template, $data);
+
 
